@@ -42,13 +42,13 @@ export default function RunningTextComponent({ text }) {
   }, []);
 
   return (
-    <div className="bg-yellow-400 mt-4 py-2 px-1 overflow-hidden">
+    <div className="bg-yellow-400 text-blue-950 mt-4 py-4 px-1 overflow-hidden">
       <div className="marquee">
         <div className="marquee-content">
-          <span className="text-xl font-semibold italic whitespace-nowrap">
+          <span className="text-3xl font-semibold italic whitespace-nowrap">
             {content || "Belum ada rapat hari ini"}
           </span>
-          <span className="text-xl font-semibold italic whitespace-nowrap">
+          <span className="text-3xl font-semibold italic whitespace-nowrap">
             {content || "Belum ada rapat hari ini"}
           </span>
         </div>

@@ -20,41 +20,47 @@ export default function Profile() {
 
   const handleOverlayClick = (e) => {
     if (e.target === e.currentTarget) {
-      // Close the modal only if the overlay itself is clicked
       handleCloseModal();
     }
   };
 
   return (
-    <div className="flex flex-col gap-8 justify-center px-2 py-4">
+    <div className="flex flex-col justify-center items-center gap-12 px-8 py-8 h-screen w-screen bg-gray-100">
+      {/* Header */}
       <div className="text-center">
-        <h1 className="text-2xl font-bold text-blue-950">Profil</h1>
+        <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-blue-950">
+          Profil
+        </h1>
       </div>
+
+      {/* Gambar Utama */}
       <div className="flex justify-center">
         <img
           src="bpljori.png"
-          className="w-36 cursor-pointer"
+          className="w-64 md:w-80 lg:w-96 cursor-pointer transition-transform hover:scale-110"
           alt="bplj"
-          onClick={() => {
-            handleOpenModal("filosofi");
-          }}
+          onClick={() => handleOpenModal("filosofi")}
         />
       </div>
-      <div className="flex justify-around items-center">
-        <div>
-          <button
-            className="text-red-700 font-semibold border-4 border-yellow-400 rounded-full px-2 py-1"
-            onClick={() => {
-              handleOpenModal("maskot");
-            }}
-          >
-            Maskot HADE
-          </button>
-        </div>
-        <img src="maskot-hade.png" className="w-48" alt="bplj" />
+
+      {/* Maskot Section */}
+      <div className="flex flex-col md:flex-row justify-around items-center gap-12 w-full">
+        <button
+          className="text-red-700 font-bold border-4 border-yellow-400 rounded-full px-8 py-4 text-2xl md:text-3xl hover:bg-yellow-400 hover:text-white transition-all"
+          onClick={() => handleOpenModal("maskot")}
+        >
+          Maskot HADE
+        </button>
+        <img
+          src="maskot-hade.png"
+          className="w-64 md:w-80 lg:w-96 transition-transform hover:scale-110"
+          alt="maskot-hade"
+        />
       </div>
-      <div className="flex justify-around items-center">
-        <div className="text-3xl">
+
+      {/* Tagline Section */}
+      <div className="flex flex-col md:flex-row justify-around items-center gap-12 w-full">
+        <div className="text-center md:text-left text-4xl md:text-5xl">
           <p className="font-bold">
             <span className="text-blue-700 font-bold">H</span>armonic
           </p>
@@ -68,32 +74,29 @@ export default function Profile() {
             <span className="text-blue-700 font-bold">E</span>xcellent
           </p>
         </div>
-        <div>
-          <button
-            className="text-blue-700 font-semibold border-4 border-blue-700 rounded-full px-2 py-1"
-            onClick={() => {
-              handleOpenModal("tagline");
-            }}
-          >
-            Tagline HADE
-          </button>
-        </div>
+        <button
+          className="text-blue-700 font-bold border-4 border-blue-700 rounded-full px-8 py-4 text-2xl md:text-3xl hover:bg-blue-700 hover:text-white transition-all"
+          onClick={() => handleOpenModal("tagline")}
+        >
+          Tagline HADE
+        </button>
       </div>
-      <div className="flex justify-center text-3xl">
-        <a href="/">
+
+      {/* Home Icon */}
+      <div className="absolute bottom-8 left-0 right-0 flex justify-center text-6xl">
+        <a href="/" className="text-gray-700 hover:text-blue-700 transition-colors">
           <RiHome6Line />
         </a>
       </div>
+
 
       {/* Modal */}
       {isModalOpen && type === "filosofi" && (
         <FilosofiModal action={handleOverlayClick} />
       )}
-
       {isModalOpen && type === "maskot" && (
         <MaskotModal action={handleOverlayClick} />
       )}
-
       {isModalOpen && type === "tagline" && (
         <TaglineModal action={handleOverlayClick} />
       )}

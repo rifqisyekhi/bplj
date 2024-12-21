@@ -23,8 +23,8 @@ export default function LayananPengujian() {
   }, []);
 
   return (
-    <div className="flex flex-col bg-blue-950 h-screen">
-      <div className="mx-2 flex flex-wrap gap-6 uppercase mt-8 px-1 scrollable-container overflow-x-hidden">
+    <div className="flex flex-col bg-yellow-400 h-screen pt-10">
+      <div className="mx-10 flex flex-wrap gap-10 uppercase mt-8 px-1 scrollable-container overflow-x-hidden">
         {layanan.map((item) => (
           <CardLayananPengujian
             key={item._id}
@@ -34,7 +34,7 @@ export default function LayananPengujian() {
           />
         ))}
       </div>
-      <div className="flex justify-center text-3xl text-white mt-auto pb-2">
+      <div className="flex justify-center text-6xl text-blue-950 mt-auto pb-8">
         <a href="/">
           <RiHome6Line />
         </a>

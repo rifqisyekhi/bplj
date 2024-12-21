@@ -1,8 +1,11 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { RiHome6Line } from "react-icons/ri";
 
 export default function Duratek() {
   const [openAccordion, setOpenAccordion] = useState(null);
+
+  // State untuk memicu animasi slide-in
+  const [isAnimated, setIsAnimated] = useState(false);
 
   // Ref array for each accordion
   const accordionRefs = useRef([]);
@@ -17,15 +20,20 @@ export default function Duratek() {
     }
   };
 
+  // Jalankan animasi saat halaman dimuat
+  useEffect(() => {
+    setTimeout(() => setIsAnimated(true), 100); // Delay animasi agar smooth
+  }, []);
+
   // Accordion titles
   const accordionTitles = [
     "Manual Desain Perkerasan (MDP) 2024",
-    "PKJI",
-    "Pedoman JPD",
-    "PDGS",
+    "Pedoman Kapasitas Jalan Indonesia",
+    "Pedoman JPD Jalur Perhentian Darurat",
+    "Pedoman Desain Geometrik Simpang",
     "Pedoman Pembangunan Jalan dan Bangunan Mitigasi Kawasan Hutan",
-    "Pedoman Persyaratan",
-    "Pedoman Inspeksi",
+    "Pedoman Persyaratan Teknis Konstruksi Berkelanjutan",
+    "Pedoman Inspeksi ",
   ];
 
   return (
@@ -37,8 +45,13 @@ export default function Duratek() {
       {accordionTitles.map((title, index) => (
         <div
           key={index}
-          className="bg-blue-950 p-2 rounded-md"
-          ref={(el) => (accordionRefs.current[index] = el)} // Assign ref for each accordion
+          className={`bg-blue-950 p-2 rounded-md transform transition-all duration-700 ease-out ${
+            isAnimated
+              ? "translate-x-0 opacity-100"
+              : "-translate-x-full opacity-0"
+          }`}
+          style={{ transitionDelay: `${index * 200}ms` }} // Delay setiap card agar tampil bertahap
+          ref={(el) => (accordionRefs.current[index] = el)}
         >
           <div
             className="flex justify-between items-center cursor-pointer"
@@ -50,12 +63,20 @@ export default function Duratek() {
             </span>
           </div>
           {openAccordion === index && (
-            <div className="mt-2 flex justify-center">
-              <img
-                src={`/duratek/${index + 1}.png`}
-                alt={`Accordion ${index + 1}`}
-                className="w-auto"
-              />
+            <div
+              className={`mt-2 transform transition-all duration-700 ease-out ${
+                openAccordion === index
+                  ? "translate-x-0 opacity-100"
+                  : "translate-x-full opacity-0"
+              }`}
+            >
+              <div className="flex justify-center">
+                <img
+                  src={`/duratek/${index + 1}.png`}
+                  alt={`Accordion ${index + 1}`}
+                  className="w-auto"
+                />
+              </div>
             </div>
           )}
         </div>

@@ -9,7 +9,7 @@ export default function CardLayananPengujian({ text, link = "/", image }) {
 
   return (
     <div
-      className="bg-white py-2 rounded-lg flex-1 basis-1/3 flex justify-center items-center cursor-pointer 
+      className="bg-white py-4 rounded-lg flex-1 basis-1/3 flex justify-center items-center cursor-pointer 
   hover:shadow-lg hover:scale-105 transition-all duration-300"
       onClick={handleClick}
     >
@@ -20,12 +20,12 @@ export default function CardLayananPengujian({ text, link = "/", image }) {
               process.env.REACT_APP_API_URL + "/" + image ||
               "https://via.placeholder.com/120"
             } // Default placeholder if no image provided
-            className="w-36 mx-auto"
+            className="w-72 mx-auto"
             alt={text}
           />
         </div>
-        <div className="mt-auto">
-          <h3 className="mt-1 text-sm font-semibold text-blue-950 text-center">
+        <div className="mt-auto px-2">
+          <h3 className="mt-1 text-xl font-semibold text-blue-950 text-center">
             {text}
           </h3>
         </div>

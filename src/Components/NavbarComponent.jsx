@@ -31,6 +31,15 @@ export default function NavbarComponent() {
                   Lobby{" "}
                 </a>
               </li>
+              {/* <li>
+                <a
+                  className="text-white py-2 px-4 bg-blue-950 rounded-lg transition hover:text-gray-500/75"
+                  href="/lobby"
+                >
+                  {" "}
+                  Profil{" "}
+                </a>
+              </li> */}
             </ul>
           </nav>
 

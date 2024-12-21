@@ -12,6 +12,7 @@ import LayananPengujian from "./pages/LayananPengujian";
 import DetailLayananPengujian from "./pages/DetailLayananPengujian";
 import Duratek from "./pages/Duratek";
 import Lobby from "./pages/Lobby";
+import Nspk from "./pages/Nspk";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/lobby" element={<Lobby />} />
+        <Route path="/nspk" element={<Nspk />} />
         <Route path="/profil" element={<Profile />} />
         <Route path="/layanan-advis-teknis" element={<LayananAdvisTeknis />} />
         <Route path="/layanan-pengujian" element={<LayananPengujian />} />

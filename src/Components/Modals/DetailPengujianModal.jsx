@@ -11,8 +11,8 @@ export default function DetailPengujianModal({ action, content, title }) {
         onClick={(e) => e.stopPropagation()} // Prevent clicks inside modal from closing it
       >
         {/* Modal Body */}
-        <div className="text-sm text-justify bg-blue-950 p-2 mt-4">
-          <p className="text-white">{content}</p>
+        <div className="text-sm text-justify bg-blue-950 p-2 mt-4 text-white">
+          <div dangerouslySetInnerHTML={{__html: content}}/>
         </div>
       </div>
     </div>

@@ -18,10 +18,22 @@ export default function Home() {
       <div className="mb-6">
         <img src="image.png" className="h-24 w-full md:h-auto" />
       </div>
-      <div className="mt-auto mx-12 flex flex-wrap gap-12 uppercase mt-4 mb-3">
-        <CardAtom text={"NSPK"} icon={<MdOutlineDocumentScanner />} link="/nspk" />
-        <CardAtom text={"Layanan Pengujian"} icon={<IoConstructOutline />} link="/layanan-pengujian" />
-        <CardAtom text={"Layanan Advis Teknis"} icon={<TbUsersGroup />} link="layanan-advis-teknis" />
+      <div className="mt-auto mx-12 flex flex-wrap gap-12 uppercase mb-3">
+        <CardAtom
+          text={"NSPK"}
+          icon={<MdOutlineDocumentScanner />}
+          link="/nspk"
+        />
+        <CardAtom
+          text={"Layanan Pengujian"}
+          icon={<IoConstructOutline />}
+          link="/layanan-pengujian"
+        />
+        <CardAtom
+          text={"Layanan Advis Teknis"}
+          icon={<TbUsersGroup />}
+          link="layanan-advis-teknis"
+        />
         <CardAtom text={"Duratek"} icon={<GrObjectUngroup />} link="duratek" />
       </div>
       <div className="mt-auto">

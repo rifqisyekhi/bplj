@@ -3,6 +3,9 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      screens: {
+        "3xl": "2560px",
+      },
       textStroke: {
         blue: "2px blue", // Stroke width and color
       },

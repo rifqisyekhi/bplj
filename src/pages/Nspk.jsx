@@ -15,7 +15,7 @@ export default function Nspk() {
 
       {/* QR Code Section */}
       <div className="flex flex-col justify-center items-center my-auto pb-[300px]">
-        <p className="text-6xl font-bold mb-4">Scan disini</p>
+        <p className="text-6xl font-bold mb-4">Scan Disini</p>
         <img src="nspk-qr.png" alt="NSPK QR" className="w-1/2 h-auto" />
         <p className="text-center text-5xl mt-20">s.id/nspk-pupr</p>
       </div>

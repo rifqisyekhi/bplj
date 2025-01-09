@@ -29,8 +29,12 @@ const RealTimeClock = () => {
 
   return (
     <div className="text-left mb-4">
-      <h1 className="text-blue-950 text-4xl font-bold">{formattedDate}</h1>
-      <h2 className="text-blue-950 text-5xl font-bold">{formattedTime} WIB</h2>
+      <h1 className="text-blue-950 2xl:text-5xl text-4xl font-bold">
+        {formattedDate}
+      </h1>
+      <h2 className="text-blue-950 2xl:text-6xl text-5xl font-bold">
+        {formattedTime} WIB
+      </h2>
     </div>
   );
 };

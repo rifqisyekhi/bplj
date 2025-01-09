@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import axios from "axios";
+import { getRunningText } from "../libs/meeting";
 
 const formatDate = (dateString) => {
   const options = {
@@ -18,9 +19,7 @@ export default function RunningTextComponent({ text }) {
   useEffect(() => {
     (async () => {
       try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_API_URL}/running-text`
-        );
+        const response = await getRunningText();
 
         // Assuming `response.data` is the meetings array
         const meetings = response.data;

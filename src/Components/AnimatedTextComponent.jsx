@@ -12,7 +12,7 @@ const AnimatedTextComponent = () => {
   };
 
   return (
-    <div className="text-5xl flex flex-col gap-3">
+    <div className="3xl:text-6xl text-5xl flex flex-col gap-3">
       <p className="font-bold">
         <ReactTyped
           key={key}

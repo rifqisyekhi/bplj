@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import axios from "axios";
+import { getRunningText } from "../libs/meeting";
 
 const formatDate = (dateString) => {
   const options = {
@@ -18,9 +19,7 @@ export default function RunningTextLobbyComponent({ text }) {
   useEffect(() => {
     (async () => {
       try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_API_URL}/running-text`
-        );
+        const response = await getRunningText();
 
         // Assuming `response.data` is the meetings array
         const meetings = response.data;
@@ -45,10 +44,10 @@ export default function RunningTextLobbyComponent({ text }) {
     <div className="bg-yellow-400 mt-4 py-2 px-1 overflow-hidden">
       <div className="marquee">
         <div className="marquee-content">
-          <span className="text-xl font-semibold italic">
+          <span className="3xl:text-3xl 2xl:text-2xl text-xl font-semibold italic">
             {content || "Belum ada rapat hari ini."}
           </span>
-          <span className="text-xl font-semibold italic">
+          <span className="3xl:text-3xl 2xl:text-2xl text-xl font-semibold italic">
             {content || "Belum ada rapat hari ini."}
           </span>
         </div>

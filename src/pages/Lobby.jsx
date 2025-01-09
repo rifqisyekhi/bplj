@@ -4,15 +4,13 @@ import RealTimeClock from "../Components/RealTimeClock";
 import { GoDotFill } from "react-icons/go";
 import CardJadwalRapat from "../Components/Atoms/CardJadwalRapat";
 import AnimatedTextComponent from "../Components/AnimatedTextComponent";
-import axios from "axios";
+import { getLobbyMeeting } from "../libs/meeting";
 
 async function getMeetings() {
   try {
-    const response = await axios.get(
-      `${process.env.REACT_APP_API_URL}/lobby-meetings`
-    );
-    console.log(response.data);
-    return response.data;
+    const response = await getLobbyMeeting();
+    if (response.success) return response.data;
+    else return [];
   } catch (error) {
     console.error("Error fetching meetings:", error);
     return [];
@@ -70,8 +68,8 @@ const getClosestMeeting = (meetings) => {
     const endTimeFormatted = meeting.end_time.padStart(5, "0"); // Ensure HH:mm format
 
     // Create valid date strings
-    const meetingStartTimeString = `${formattedDate}T${startTimeFormatted}:00`;
-    const meetingEndTimeString = `${formattedDate}T${endTimeFormatted}:00`;
+    const meetingStartTimeString = `${formattedDate}T${startTimeFormatted}`;
+    const meetingEndTimeString = `${formattedDate}T${endTimeFormatted}`;
 
     // Create Date objects
     const meetingStartTime = new Date(meetingStartTimeString);
@@ -93,7 +91,7 @@ const getClosestMeeting = (meetings) => {
   // Remove the closest meeting from the array if it exists
   if (closestMeeting) {
     const index = meetings.findIndex(
-      (meeting) => meeting._id === closestMeeting._id
+      (meeting) => meeting.id === closestMeeting.id
     );
     if (index !== -1) {
       meetings.splice(index, 1); // Remove closest meeting from the array
@@ -152,7 +150,7 @@ export default function Lobby() {
 
   return (
     <div className="h-screen my-0 pb-0 pt-4 bg-gray-100 flex flex-col">
-      <div className="mx-6 flex justify-between px-2 pb-2 pt-4">
+      <div className="mx-6 flex gap-12 justify-between px-2 pb-2 pt-4">
         <div className="basis-6/12">
           <div>
             <RealTimeClock />
@@ -160,7 +158,7 @@ export default function Lobby() {
           <div className="flex flex-col gap-3">
             {/* Rapat Hari Ini */}
             {!todayMeeting && (
-              <h2 className="text-3xl text-blue-950 mt-2">
+              <h2 className="2xl:text-4xl text-3xl text-blue-950 mt-2">
                 JADWAL RAPAT TERDEKAT
               </h2>
             )}
@@ -169,20 +167,22 @@ export default function Lobby() {
                 <div className="flex justify-between text-blue-950">
                   <div>
                     <h2 className="text-5xl font-bold">RAPAT HARI INI</h2>
-                    <p className="text-2xl">{todayMeeting.judul}</p>
+                    <p className="2xl:text-4xl text-2xl">
+                      {todayMeeting.judul}
+                    </p>
                   </div>
                   <div>
-                    <p className="text-xl">
+                    <p className="2xl:text-3xl text-xl">
                       {formatDate(todayMeeting.tanggal)}
                     </p>
                   </div>
                 </div>
                 <div>
-                  <div className="flex pl-0 ml-0 mt-6 mb-2 gap-2">
-                    <span className="text-xl pt-[3.5px] pl-0 ml-0 text-red-700 animate-ping delay-700">
+                  <div className="flex items-center mt-6 mb-2 gap-2">
+                    <span className="text-xl text-red-700 animate-ping delay-700">
                       <GoDotFill />
                     </span>
-                    <span className="text-xl">
+                    <span className="2xl:text-3xl text-xl">
                       {timeRemaining > 0
                         ? `${timeRemaining} menit lagi`
                         : "Sedang Berlangsung"}
@@ -193,27 +193,27 @@ export default function Lobby() {
                   <table className="min-w-full table-auto border-collapse border-2 border-blue-950">
                     <thead>
                       <tr>
-                        <th className="px-6 py-3 border-2 border-blue-950 text-left text-2xl font-medium">
+                        <th className="px-6 py-3 border-2 border-blue-950 text-left 2xl:text-3xl text-2xl font-medium">
                           Waktu
                         </th>
-                        <th className="px-6 py-3 border-2 border-blue-950 text-left text-2xl font-medium">
+                        <th className="px-6 py-3 border-2 border-blue-950 text-left 2xl:text-3xl text-2xl font-medium">
                           Tempat
                         </th>
-                        <th className="px-6 py-3 border-2 border-blue-950 text-left text-2xl font-medium">
+                        <th className="px-6 py-3 border-2 border-blue-950 text-left 2xl:text-3xl text-2xl font-medium">
                           Audiens
                         </th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <td className="px-6 py-4 border-2 border-blue-950 text-2xl font-bold">
+                        <td className="px-6 py-4 border-2 border-blue-950 2xl:text-3xl text-2xl font-bold">
                           {todayMeeting.start_time} - {todayMeeting.end_time}{" "}
                           WIB
                         </td>
-                        <td className="px-6 py-4 border-2 border-blue-950 text-2xl font-bold">
+                        <td className="px-6 py-4 border-2 border-blue-950 2xl:text-3xl text-2xl font-bold">
                           {todayMeeting.tempat}
                         </td>
-                        <td className="px-6 py-4 border-2 border-blue-950 text-2xl font-bold">
+                        <td className="px-6 py-4 border-2 border-blue-950 2xl:text-3xl text-2xl font-bold">
                           {todayMeeting.audiens}
                         </td>
                       </tr>
@@ -224,16 +224,20 @@ export default function Lobby() {
             )}
 
             {/* Render upcoming meetings */}
-            {meetings.map((meeting) => (
-              <CardJadwalRapat
-                key={meeting._id}
-                title={meeting.judul}
-                date={
-                  `${meeting.start_time} - ${meeting.end_time} | ` +
-                  formatDate(meeting.tanggal)
-                }
-              />
-            ))}
+            {meetings.map((meeting) => {
+              const startTime = meeting.start_time.slice(0, 5); // Mengambil "HH:mm"
+              const endTime = meeting.end_time.slice(0, 5); // Mengambil "HH:mm"
+
+              return (
+                <CardJadwalRapat
+                  key={meeting.id}
+                  title={meeting.judul}
+                  date={`${startTime} - ${endTime} | ${formatDate(
+                    meeting.tanggal
+                  )}`}
+                />
+              );
+            })}
 
             <div className="flex gap-2 text-gray-500 ml-56 pl-6 mt-2">
               <GoDotFill />
@@ -249,10 +253,10 @@ export default function Lobby() {
               window.location.href = "/";
             }}
           >
-            <h1 className="text-blue-950 text-3xl font-bold">
+            <h1 className="text-blue-950 2xl:text-4xl text-3xl font-bold">
               Balai Perkerasan dan Lingkungan Jalan
             </h1>
-            <h2 className="text-blue-950 text-xl font-semibold">
+            <h2 className="text-blue-950 2xl:text-2xl text-xl font-semibold">
               Kementrian Pekerjaan Umum dan Perumahan Rakyat
             </h2>
           </div>
@@ -273,7 +277,11 @@ export default function Lobby() {
       </div>
       <div className="flex w-full mt-auto gap-2">
         <div>
-          <img src="/bpljori.png" alt="bpljori" className="ml-6 w-24 h-auto" />
+          <img
+            src="/bpljori.png"
+            alt="bpljori"
+            className="ml-6 2xl:w-[108px] w-24 h-auto"
+          />
         </div>
         <div className="w-full mt-2 z-50">
           <RunningTextLobbyComponent
@@ -281,11 +289,15 @@ export default function Lobby() {
           />
         </div>
         <div className="absolute bottom-0 right-0 mr-2">
-          <img src="/mang-hade.png" alt="Mang Hade" className="w-64 h-auto" />
+          <img
+            src="/mang-hade.png"
+            alt="Mang Hade"
+            className="3xl:w-[34rem] 2xl:w-96 w-64 h-auto"
+          />
         </div>
       </div>
-      <div className="flex justify-end lg:mr-72">
-        <p className="text-blue-950 font-bold">
+      <div className="flex justify-end lg:mr-72 3xl:mr-96">
+        <p className="2xl:text-2xl text-blue-950 font-bold">
           Follow us: <span className="italic font-semibold">@pupr_bm_bplj</span>
         </p>
       </div>
